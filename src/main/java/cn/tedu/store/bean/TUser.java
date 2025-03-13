@@ -1,8 +1,12 @@
 package cn.tedu.store.bean;
 
 
-public class TUser {
+import java.io.Serializable;
+import java.sql.Date;
+import java.util.Objects;
 
+public class TUser implements Serializable {
+  private static final long serialVersionUID = 1L;
   private int id;
   private String username;
   private String password;
@@ -14,6 +18,33 @@ public class TUser {
   private String modifiedUser;
   private java.sql.Date modifiedTime;
 
+  public TUser() {
+  }
+
+  public TUser(int id, String username, Date modifiedTime, Date createdTime, String modifiedUser, String createdUser, long gender, String phone, String email, String password) {
+    this.id = id;
+    this.username = username;
+    this.modifiedTime = modifiedTime;
+    this.createdTime = createdTime;
+    this.modifiedUser = modifiedUser;
+    this.createdUser = createdUser;
+    this.gender = gender;
+    this.phone = phone;
+    this.email = email;
+    this.password = password;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (o == null || getClass() != o.getClass()) return false;
+    TUser tUser = (TUser) o;
+    return id == tUser.id && gender == tUser.gender && Objects.equals(username, tUser.username) && Objects.equals(password, tUser.password) && Objects.equals(email, tUser.email) && Objects.equals(phone, tUser.phone) && Objects.equals(createdUser, tUser.createdUser) && Objects.equals(createdTime, tUser.createdTime) && Objects.equals(modifiedUser, tUser.modifiedUser) && Objects.equals(modifiedTime, tUser.modifiedTime);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(id, username, password, email, phone, gender, createdUser, createdTime, modifiedUser, modifiedTime);
+  }
 
   public int getId() {
     return id;
@@ -104,4 +135,19 @@ public class TUser {
     this.modifiedTime = modifiedTime;
   }
 
+  @Override
+  public String toString() {
+    return "TUser{" +
+            "id=" + id +
+            ", username='" + username + '\'' +
+            ", password='" + password + '\'' +
+            ", email='" + email + '\'' +
+            ", phone='" + phone + '\'' +
+            ", gender=" + gender +
+            ", createdUser='" + createdUser + '\'' +
+            ", createdTime=" + createdTime +
+            ", modifiedUser='" + modifiedUser + '\'' +
+            ", modifiedTime=" + modifiedTime +
+            '}';
+  }
 }
