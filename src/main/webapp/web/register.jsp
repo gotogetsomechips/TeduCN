@@ -39,7 +39,7 @@
         <div class="form-group">
           <label for="uname">用户名：</label>
           <input autocomplete required minlength="6" maxlength="9" type="text" placeholder="请输入用户名" autofocus name="uname" id="uname"/>
-          <span class="msg-default">用户名长度在6到9位之间</span>
+          <span class="msg-default" id = "unamespan">用户名长度在6到9位之间</span>
         </div>
         <div class="form-group">
           <label for="upwd">登录密码：</label>
@@ -54,12 +54,12 @@
         <div class="form-group">
           <label for="email">邮箱：</label>
           <input autocomplete required type="email" placeholder="请输入邮箱地址" name="email" id="email"/>
-          <span class="msg-default hidden">请输入合法的邮箱地址</span>
+          <span class="msg-default hidden" id="emailspan">请输入合法的邮箱地址</span>
         </div>
         <div class="form-group">
           <label for="phone">手机号：</label>
           <input id="phone" name="phone" placeholder="请输入您的手机号" pattern="(\d{11})|^((\d{7,8})|(\d{4}|\d{3})-(\d{7,8})|(\d{4}|\d{3})-(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1})|(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1}))$" required type="text" />
-          <span class="msg-default hidden">请输入合法的手机号</span>
+          <span class="msg-default hidden" id="phonespan">请输入合法的手机号</span>
         </div>
         <div class="form-group">
           <label></label>
@@ -175,38 +175,54 @@
         return;
       }
       /**发起异步GET请求，询问服务器用户名是否已经存在**/
-              //1 创建xhr
-      var xhr = new XMLHttpRequest();
-      console.log(xhr);
-      //2 监听状态改变 01234，4最有价值
-      xhr.onreadystatechange = function(){
-        if(xhr.readyState===4){//响应完成
-          if(xhr.status===200){
-            console.log('响应完成且成功');
-            doResponse(xhr);
-          }
-          else {
-            console.log('响应完成但有问题');
+      $.ajax({
+        url:"../user/checkUsername.do",
+        data:"username="+$("#uname").val(),
+        type:"get",
+        dataType:"json",
+        success:function (obj) {
+          // alert(obj.state+","+obj.message);
+          $("#unamespan").html(obj.message);
+          if(obj.state==0){
+            $("#unamespan").attr("class","msg-error");
+          }else {
+            $("#unamespan").attr("class","msg-success");
           }
         }
-      }
-      //3 打开连接
-      xhr.open('GET','/checkUsername.html?username='+data, true);
-      //4 发送请求
-      xhr.send(null);
 
-      //处理响应消息
-      function doResponse(xhr){
-        console.log('开始处理响应数据');
-        //console.log(xhr);
-        if(xhr.responseText==='yes'){
-          alert('该用户名已被占用');
-        }else if(xhr.responseText==='no'){
-          alert('该用户名可以使用');
-        }else {
-          alert(xhr.responseText);
-        }
-      }
+      });
+      //         //1 创建xhr
+      // var xhr = new XMLHttpRequest();
+      // console.log(xhr);
+      // //2 监听状态改变 01234，4最有价值
+      // xhr.onreadystatechange = function(){
+      //   if(xhr.readyState===4){//响应完成
+      //     if(xhr.status===200){
+      //       console.log('响应完成且成功');
+      //       doResponse(xhr);
+      //     }
+      //     else {
+      //       console.log('响应完成但有问题');
+      //     }
+      //   }
+      // }
+      // //3 打开连接
+      // xhr.open('GET','/checkUsername.html?username='+data, true);
+      // //4 发送请求
+      // xhr.send(null);
+      //
+      // //处理响应消息
+      // function doResponse(xhr){
+      //   console.log('开始处理响应数据');
+      //   //console.log(xhr);
+      //   if(xhr.responseText==='yes'){
+      //     alert('该用户名已被占用');
+      //   }else if(xhr.responseText==='no'){
+      //     alert('该用户名可以使用');
+      //   }else {
+      //     alert(xhr.responseText);
+      //   }
+      // }
     }
   }
 
@@ -275,37 +291,52 @@
         return;
       }
       /**发起异步GET请求，询问服务器用户名是否已经存在**/
-              //1 创建xhr
-      var xhr = new XMLHttpRequest();
-      //2 监听状态改变 01234，4最有价值
-      xhr.onreadystatechange = function(){
-        if(xhr.readyState===4){//响应完成
-          if(xhr.status===200){
-            console.log('响应完成且成功');
-            doResponse(xhr);
-          }
-          else {
-            console.log('响应完成但有问题');
+      $.ajax({
+        url:"../user/checkEmail.do",
+        data:"email="+$("#email").val(),
+        type:"get",
+        dataType:"json",
+        success:function (obj) {
+          // alert(obj.state+","+obj.message);
+          $("#emailspan").html(obj.message);
+          if(obj.state==0){
+            $("#emailspan").attr("class","msg-error");
+          }else {
+            $("#emailspan").attr("class","msg-success");
           }
         }
-      }
-      //3 打开连接
-      xhr.open('GET','/checkEmail.html?email='+data, true);
-      //4 发送请求
-      xhr.send(null);
-
-      //处理响应消息
-      function doResponse(xhr){
-        console.log('开始处理响应数据');
-        //console.log(xhr);
-        if(xhr.responseText==='yes'){
-          alert('该邮箱已被占用');
-        }else if(xhr.responseText==='no'){
-          alert('该邮箱可以使用');
-        }else {
-          alert(xhr.responseText);
-        }
-      }
+      });
+      //         //1 创建xhr
+      // var xhr = new XMLHttpRequest();
+      // //2 监听状态改变 01234，4最有价值
+      // xhr.onreadystatechange = function(){
+      //   if(xhr.readyState===4){//响应完成
+      //     if(xhr.status===200){
+      //       console.log('响应完成且成功');
+      //       doResponse(xhr);
+      //     }
+      //     else {
+      //       console.log('响应完成但有问题');
+      //     }
+      //   }
+      // }
+      // //3 打开连接
+      // xhr.open('GET','/checkEmail.html?email='+data, true);
+      // //4 发送请求
+      // xhr.send(null);
+      //
+      // //处理响应消息
+      // function doResponse(xhr){
+      //   console.log('开始处理响应数据');
+      //   //console.log(xhr);
+      //   if(xhr.responseText==='yes'){
+      //     alert('该邮箱已被占用');
+      //   }else if(xhr.responseText==='no'){
+      //     alert('该邮箱可以使用');
+      //   }else {
+      //     alert(xhr.responseText);
+      //   }
+      // }
     }
   }
   email.onfocus = function(){
@@ -332,37 +363,53 @@
         return;
       }
       /**发起异步GET请求，询问服务器用户名是否已经存在**/
-              //1 创建xhr
-      var xhr = new XMLHttpRequest();
-      //2 监听状态改变 01234，4最有价值
-      xhr.onreadystatechange = function(){
-        if(xhr.readyState===4){//响应完成
-          if(xhr.status===200){
-            console.log('响应完成且成功');
-            doResponse(xhr);
-          }
-          else{
-            console.log('响应完成但有问题');
+      $.ajax({
+        url:"../user/checkPhone.do",
+        data:"phone="+$("#phone").val(),
+        type:"get",
+        dataType:"json",
+        success:function (obj) {
+          // alert(obj.state+","+obj.message);
+          $("#phonespan").html(obj.message);
+          if(obj.state==0){
+            $("#phonespan").attr("class","msg-error");
+          }else {
+            $("#phonespan").attr("class","msg-success");
           }
         }
-      }
-      //3 打开连接
-      xhr.open('GET','/checkPhone.html?phone='+data, true);
-      //4 发送请求
-      xhr.send(null);
-
-      //处理响应消息
-      function doResponse(xhr){
-        console.log('开始处理响应数据');
-        //console.log(xhr);
-        if(xhr.responseText==='yes'){
-          alert('该号码已被占用');
-        }else if(xhr.responseText==='no'){
-          alert('该号码可以使用');
-        }else {
-          alert(xhr.responseText);
-        }
-      }
+      });
+      //
+      //         //1 创建xhr
+      // var xhr = new XMLHttpRequest();
+      // //2 监听状态改变 01234，4最有价值
+      // xhr.onreadystatechange = function(){
+      //   if(xhr.readyState===4){//响应完成
+      //     if(xhr.status===200){
+      //       console.log('响应完成且成功');
+      //       doResponse(xhr);
+      //     }
+      //     else{
+      //       console.log('响应完成但有问题');
+      //     }
+      //   }
+      // }
+      // //3 打开连接
+      // xhr.open('GET','/checkPhone.html?phone='+data, true);
+      // //4 发送请求
+      // xhr.send(null);
+      //
+      // //处理响应消息
+      // function doResponse(xhr){
+      //   console.log('开始处理响应数据');
+      //   //console.log(xhr);
+      //   if(xhr.responseText==='yes'){
+      //     alert('该号码已被占用');
+      //   }else if(xhr.responseText==='no'){
+      //     alert('该号码可以使用');
+      //   }else {
+      //     alert(xhr.responseText);
+      //   }
+      // }
     }
   }
   phone.onfocus = function(){
