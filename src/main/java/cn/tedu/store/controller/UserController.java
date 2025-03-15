@@ -1,11 +1,11 @@
 package cn.tedu.store.controller;
 
 import cn.tedu.store.bean.ResponseResult;
-import cn.tedu.store.service.IEmailService;
-import cn.tedu.store.service.IPhoneService;
+import cn.tedu.store.bean.TUser;
 import cn.tedu.store.service.IUserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
@@ -66,6 +66,26 @@ public class UserController {
         }
         return result2;
     }
+
+    @RequestMapping(value = "/register.do", method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseResult<TUser> register(TUser user) {
+        ResponseResult<TUser> result = new ResponseResult<>();
+        try {
+            // 调用业务层执行注册
+            TUser registeredUser = userService.register(user);
+            // 注册成功
+            result.setState(1);
+            result.setMessage("注册成功！");
+            result.setData(registeredUser);
+        } catch (Exception e) {
+            // 注册失败
+            result.setState(0);
+            result.setMessage("注册失败：" + e.getMessage());
+        }
+        return result;
+    }
+
     @RequestMapping("showRegister.do")
     public String showRegister(){
         return "register";

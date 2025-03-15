@@ -9,4 +9,11 @@ public interface UserMapper {
     TUser selectUserByPhone(String phone);
 
     TUser selectUserByEmail(String email);
+
+    /**
+     * 插入用户数据
+     * @param user 用户数据
+     * @return 受影响的行数
+     */
+    Integer insertUser(TUser user);
 }

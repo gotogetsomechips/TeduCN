@@ -1,5 +1,7 @@
 package cn.tedu.store.service;
 
+import cn.tedu.store.bean.TUser;
+
 public interface IUserService {
     /**
      * 验证用户名是否存在
@@ -22,4 +24,12 @@ public interface IUserService {
      */
 
     boolean checkEmail(String email);
+
+
+    /**
+     * 用户注册
+     * @param user 用户数据
+     * @return 注册成功的用户数据
+     */
+    TUser register(TUser user);
 }

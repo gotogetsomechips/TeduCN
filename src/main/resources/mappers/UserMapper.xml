@@ -55,4 +55,15 @@
         where
             email=#{email}
     </select>
+
+    <!-- 插入用户数据 -->
+    <insert id="insertUser" parameterType="cn.tedu.store.bean.TUser" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO t_user (
+            username, password, email, phone, gender,
+            created_user, created_time, modified_user, modified_time
+        ) VALUES (
+                     #{username}, #{password}, #{email}, #{phone}, #{gender},
+                     #{createdUser}, #{createdTime}, #{modifiedUser}, #{modifiedTime}
+                 )
+    </insert>
 </mapper>

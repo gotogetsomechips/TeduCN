@@ -141,19 +141,55 @@
 <script src="../js/jquery-3.1.1.min.js"></script>
 <script>
   $('#bt-register').click(function(){
-    var lengths=0;
+    var lengths = 0;
     $('.form-group').each(function(){
       if($(this).find('span').hasClass('msg-success')){
         lengths++;
       }
-      if(lengths==4){
-        $('.modal').fadeIn();
-        setTimeout(function(){
-          window.location.href='login.html';
-        },2000);
-      }
     });
-  })
+
+    // 如果所有字段验证通过
+    if(lengths == 5){ // 用户名、密码、确认密码、邮箱、手机号五个字段
+      // 检查两次密码是否一致
+      if($("#upwd").val() !== $("#upwdconfirm").val()){
+        alert("两次输入的密码不一致！");
+        return;
+      }
+
+      // 准备表单数据
+      var userData = {
+        username: $("#uname").val(),
+        password: $("#upwd").val(),
+        email: $("#email").val(),
+        phone: $("#phone").val(),
+        gender: 0 // 默认性别值，您可以根据需要修改或添加性别选择
+      };
+
+      // 发送AJAX请求
+      $.ajax({
+        url: "../user/register.do",
+        type: "post",
+        data: userData,
+        dataType: "json",
+        success: function(result){
+          if(result.state == 1){
+            // 注册成功
+            alert("注册成功！");
+            // 跳转到登录页面
+            window.location.href = '../user/showLogin.do';
+          } else {
+            // 注册失败
+            alert(result.message);
+          }
+        },
+        error: function(){
+          alert("服务器异常，请稍后再试！");
+        }
+      });
+    } else {
+      alert("请正确填写所有注册信息！");
+    }
+  });
 </script>
 <script>
   /*1.对用户名进行验证*/
@@ -251,10 +287,6 @@
   }
 
 
-  upwdconfirm.onfocus = function(){
-    this.nextElementSibling.innerHTML = '密码长度在6到12位之间';
-    this.nextElementSibling.className = 'msg-default';
-  }
   upwdconfirm.onblur = function(){
     if(this.validity.valueMissing){
       this.nextElementSibling.innerHTML = '密码不能为空';
@@ -264,6 +296,10 @@
       this.nextElementSibling.innerHTML = '密码长度在尽量别少于6位';
       this.nextElementSibling.className = 'msg-error';
       this.setCustomValidity('密码长度在尽量别少于6位');
+    }else if(this.value !== upwd.value){
+      this.nextElementSibling.innerHTML = '两次密码输入不一致';
+      this.nextElementSibling.className = 'msg-error';
+      this.setCustomValidity('两次密码输入不一致');
     }else {
       this.nextElementSibling.innerHTML = '密码格式正确';
       this.nextElementSibling.className = 'msg-success';
