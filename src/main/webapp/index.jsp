@@ -30,12 +30,12 @@
 <div id="container">
     <div id="cover" class="rt">
         <ul>
-            <li><a href="web/login.html">登录页 login.html</a></li>
-            <li><a href="web/index.html">首页 index.html</a></li>
-            <li><a href="web/register.html">注册 register.html</a></li>
-            <li><a href="web/404.html">404错误 404.html</a></li>
-            <li><a href="web/500.html">500错误 500.html</a></li>
-            <li><a href="pages.zip">下载全部资料 pages.zip</a></li>
+            <li><a href="index.jsp">首页</a></li>
+            <li><a href="user/showLogin.do">登录页</a></li>
+            <li><a href="user/showRegister.do">注册</a></li>
+<%--            <li><a href="web/404.html">404错误 404.html</a></li>--%>
+<%--            <li><a href="web/500.html">500错误 500.html</a></li>--%>
+<%--            <li><a href="pages.zip">下载全部资料 pages.zip</a></li>--%>
         </ul>
     </div>
 </div>

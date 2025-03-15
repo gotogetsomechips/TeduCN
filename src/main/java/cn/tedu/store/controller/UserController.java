@@ -33,15 +33,12 @@ public class UserController {
         return result;
     }
 
-    @Resource
-    private IEmailService emailService;
-
     //验证邮箱是否存在
     @RequestMapping("/checkEmail.do")
     @ResponseBody
     public ResponseResult<Void> checkEmail(String email) {
         ResponseResult<Void> result1 = new ResponseResult<>();
-        boolean b = emailService.checkEmail(email);
+        boolean b = userService.checkEmail(email);
         if(b){
             result1.setState(0);
             result1.setMessage("邮箱已经存在！");
@@ -52,15 +49,14 @@ public class UserController {
         return result1;
     }
 
-    @Resource
-    private IPhoneService phoneService;
+
 
     //验证手机号是否存在
     @RequestMapping("/checkPhone.do")
     @ResponseBody
     public ResponseResult<Void> checkPhone(String phone) {
         ResponseResult<Void> result2 = new ResponseResult<>();
-        boolean b = phoneService.checkPhone(phone);
+        boolean b = userService.checkPhone(phone);
         if(b){
             result2.setState(0);
             result2.setMessage("手机号已经存在！");
@@ -73,5 +69,9 @@ public class UserController {
     @RequestMapping("showRegister.do")
     public String showRegister(){
         return "register";
+    }
+    @RequestMapping("showLogin.do")
+    public String showLogin(){
+        return "login";
     }
 }

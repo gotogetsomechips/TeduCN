@@ -15,4 +15,14 @@ public class UserService implements IUserService {
     public boolean checkUserName(String userName) {
         return userMapper.selectUserByUserName(userName) != null;
     }
+
+    @Override
+    public boolean checkEmail(String email) {
+        return userMapper.selectUserByEmail(email) != null;
+    }
+
+    @Override
+    public boolean checkPhone(String phone) {
+        return userMapper.selectUserByPhone(phone) != null;
+    }
 }

@@ -8,4 +8,18 @@ public interface IUserService {
      */
 
     boolean checkUserName(String userName);
+    /**
+     * 验证手机号是否存在
+     * @param phone
+     * @return
+     */
+
+    boolean checkPhone(String phone);
+    /**
+     * 验证邮箱是否存在
+     * @param email
+     * @return
+     */
+
+    boolean checkEmail(String email);
 }

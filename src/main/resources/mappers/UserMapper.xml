@@ -3,20 +3,56 @@
 
 <mapper namespace="cn.tedu.store.mapper.UserMapper">
     <select id="selectUserByUserName" resultType="cn.tedu.store.bean.TUser">
-    select
-        id  ,
-        username    ,
-        password    ,
-        email   ,
-        phone   ,
-        gender  ,
-        created_user    ,
-        created_time    ,
-        modified_user   ,
-        modified_time
-    from
-        t_user
-    where
-        username=#{username}
+        select
+            id  ,
+            username    ,
+            password    ,
+            email   ,
+            phone   ,
+            gender  ,
+            created_user    ,
+            created_time    ,
+            modified_user   ,
+            modified_time
+        from
+            t_user
+        where
+            username=#{username}
+    </select>
+
+    <select id="selectUserByPhone" resultType="cn.tedu.store.bean.TUser">
+        select
+            id  ,
+            username    ,
+            password    ,
+            email   ,
+            phone   ,
+            gender  ,
+            created_user    ,
+            created_time    ,
+            modified_user   ,
+            modified_time
+        from
+            t_user
+        where
+            phone=#{phone}
+    </select>
+
+    <select id="selectUserByEmail" resultType="cn.tedu.store.bean.TUser">
+        select
+            id  ,
+            username    ,
+            password    ,
+            email   ,
+            phone   ,
+            gender  ,
+            created_user    ,
+            created_time    ,
+            modified_user   ,
+            modified_time
+        from
+            t_user
+        where
+            email=#{email}
     </select>
 </mapper>
