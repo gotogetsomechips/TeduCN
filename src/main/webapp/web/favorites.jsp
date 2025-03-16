@@ -1,4 +1,12 @@
-<!DOCTYPE html>
+<%--
+  Created by IntelliJ IDEA.
+  User: Universec
+  Date: 2025/3/16
+  Time: 15:05
+  To change this template use File | Settings | File Templates.
+--%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<<!DOCTYPE html>
 <html>
 <head lang="cn">
     <meta charset="UTF-8">
@@ -149,7 +157,7 @@
                                 8GB&nbsp;256GB&nbsp;SSD&nbsp;HD620&nbsp;Win10)银</p>
                             <span class="price"><b>￥</b><span class="priceContent">4000.00</span></span>
                             <span class="addCart">加入购物车</span>
-                             <span class="succee" style="display: none">
+                            <span class="succee" style="display: none">
                                  <img src="../images/myCollect/product_true.png" alt=""/>
                                  <span>已移入购物车</span>
                             </span>
@@ -169,7 +177,7 @@
                                 8GB&nbsp;256GB&nbsp;SSD&nbsp;HD620&nbsp;Win10)银</p>
                             <span class="price"><b>￥</b><span class="priceContent">4000.00</span></span>
                             <span class="addCart">加入购物车</span>
-                             <span class="succee" style="display: none">
+                            <span class="succee" style="display: none">
                                  <img src="../images/myCollect/product_true.png" alt=""/>
                                  <span>已移入购物车</span>
                             </span>
@@ -189,7 +197,7 @@
                                 8GB&nbsp;256GB&nbsp;SSD&nbsp;HD620&nbsp;Win10)银</p>
                             <span class="price"><b>￥</b><span class="priceContent">4000.00</span></span>
                             <span class="addCart">加入购物车</span>
-                             <span class="succee" style="display: none">
+                            <span class="succee" style="display: none">
                                  <img src="../images/myCollect/product_true.png" alt=""/>
                                  <span>已移入购物车</span>
                             </span>
@@ -209,7 +217,7 @@
                                 8GB&nbsp;256GB&nbsp;SSD&nbsp;HD620&nbsp;Win10)银</p>
                             <span class="price"><b>￥</b><span class="priceContent">4000.00</span></span>
                             <span class="addCart">加入购物车</span>
-                             <span class="succee" style="display: none">
+                            <span class="succee" style="display: none">
                                  <img src="../images/myCollect/product_true.png" alt=""/>
                                  <span>已移入购物车</span>
                             </span>
@@ -229,7 +237,7 @@
                                 8GB&nbsp;256GB&nbsp;SSD&nbsp;HD620&nbsp;Win10)银</p>
                             <span class="price"><b>￥</b><span class="priceContent">4000.00</span></span>
                             <span class="addCart">加入购物车</span>
-                             <span class="succee" style="display: none">
+                            <span class="succee" style="display: none">
                                  <img src="../images/myCollect/product_true.png" alt=""/>
                                  <span>已移入购物车</span>
                             </span>
@@ -260,7 +268,7 @@
                 </div>
 
 
-                </div>
+            </div>
         </section>
 
     </form>
@@ -301,8 +309,8 @@
 <div class="foot_bj">
     <div id="foot">
         <div class="lf">
-             <p class="footer1"><img src="../images/footer/logo.png" alt="" class=" footLogo"/></p>
-             <p class="footer2"><img src="../images/footer/footerFont.png" alt=""/></p>
+            <p class="footer1"><img src="../images/footer/logo.png" alt="" class=" footLogo"/></p>
+            <p class="footer2"><img src="../images/footer/footerFont.png" alt=""/></p>
         </div>
         <div class="foot_left lf">
             <ul>
@@ -334,7 +342,7 @@
         <div class="download">
             <img src="../images/footer/erweima.png">
         </div>
-		<!-- 页面底部-备案号 #footer -->
+        <!-- 页面底部-备案号 #footer -->
         <div class="record">
             &copy;2017 达内集团有限公司 版权所有 京ICP证xxxxxxxxxxx
         </div>
