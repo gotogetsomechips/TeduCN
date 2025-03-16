@@ -116,12 +116,18 @@ public class UserController {
     public String showRegister(){
         return "register";
     }
+
     @RequestMapping("showLogin.do")
     public String showLogin(){
         return "login";
     }
+
     @RequestMapping("showIndex.do")
-    public String showIndex(){
-        return "index";
-    }
+    public String showIndex(){return "index";}
+
+    @RequestMapping("show404.do")
+    public String show404(){return "404";}
+
+    @RequestMapping("show500.do")
+    public String show500(){return "500";}
 }
