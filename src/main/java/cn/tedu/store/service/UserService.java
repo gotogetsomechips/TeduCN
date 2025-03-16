@@ -47,4 +47,17 @@ public class UserService implements IUserService {
         // 返回注册成功的用户数据
         return user;
     }
+
+    @Override
+    public TUser login(String username, String password) {
+        // 根据用户名查询用户
+        TUser user = userMapper.selectUserByUserName(username);
+
+        // 判断用户是否存在且密码是否匹配
+        if (user != null && user.getPassword().equals(password)) {
+            return user; // 登录成功
+        }
+
+        return null; // 登录失败
+    }
 }

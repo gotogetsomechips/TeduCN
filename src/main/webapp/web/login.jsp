@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: Universec
-  Date: 2025/3/15
-  Time: 20:18
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html>
@@ -29,22 +22,22 @@
         <form id="login-form" method="post" name="form1">
             <div class="txt">
                 <p>
-                    登录学子商城<span><a href="register.html">新用户注册</a></span>
+                    登录学子商城<span><a href="../user/showRegister.do">新用户注册</a></span>
                 </p>
                 <div class="text">
-                    <input type="text" placeholder="请输入您的用户名" name="lname" id="username" required>
+                    <input type="text" placeholder="请输入您的用户名" name="username" id="username" required>
                     <span><img src="../images/login/yhm.png"></span>
                 </div>
 
                 <div class="text">
-                    <input type="password" id="password" placeholder="请输入您的密码" name="lwd" required minlength="6" maxlength="15">
+                    <input type="password" id="password" name="password" placeholder="请输入您的密码" required minlength="6" maxlength="15">
                     <span><img src="../images/login/mm.png"></span>
                 </div>
                 <div class="chose">
                     <input type="checkbox" class="checkbox" id="ck_rmbUser" value="0">自动登录
                     <span>忘记密码？</span>
                 </div>
-                <input class="button_login" type="button" value="登录" id="bt-login" onclick="Save()"/>
+                <input class="button_login" type="button" value="登录" id="bt-login"/>
             </div>
         </form>
     </div>
@@ -130,81 +123,105 @@
         }
         $.ajax({
             type:"POST",
-            url:"/checkUsername.html",
+            url:"../user/checkUsername.do",
             data:"username="+data,
+            dataType: "json",
             beforeSend:function(XMLHttpRequest)
             {
                 $("#showResult").text("正在查询");
 
             },
-            success:function(msg)
+            success:function(result)
             {
-                if(msg ==="yes"){
-                    $("#showResult").text("该用户名可以被使用");
-                }else if(msg === 'no'){
-                    $("#showResult").text("该用户名不存在");
-                    $("#showResult").css("color","red");
-                }else {
-                    $("#showResult").text("系统异常！");
+                if(result.state === 0) {
+                    $("#showResult").text("用户名已存在");
+                    $("#showResult").css("color","green");
+                } else {
+                    $("#showResult").text("用户名不存在，请先注册");
                     $("#showResult").css("color","red");
                 }
             },
             error:function()
             {
-                //错误处理
+                $("#showResult").text("系统异常！");
+                $("#showResult").css("color","red");
             }
         });
     });
 </script>
 <script>
     $('#bt-login').click(function(){
-        //读取用户的输入——表单序列化
-        var inputData = $('#login-form').serialize();
-        //异步提交请求，进行验证
-        /*
-		$.ajax({
-            type: 'POST',
-            url: 'data/1_login.php',
-            data: inputData,
-            success: function(txt, msg, xhr){
-                if(txt=='ok'){  //登录成功
-                    var loginName = $('[name="uname"]').val();
-                    sessionStorage['loginName']=loginName;
-                    console.log(loginName);
-                }else{ //登录失败
-                    $('#showResult').html('登录失败！错误消息为：'+txt);
-                }
-            }
-        }); */
-        location.href='index.html';
-    });
-</script>
-<script type="text/javascript">
+        // 获取用户名和密码
+        var username = $("#username").val();
+        var password = $("#password").val();
 
-    $(document).ready(function () {
-        if ($.cookie("rmbUser") == "true") {
-            $("#ck_rmbUser").attr("checked", true);
-            $("#username").val($.cookie("username"));
-            $("#password").val($.cookie("password"));
+        // 表单验证
+        if(username == "") {
+            $("#showResult").text("用户名不能为空");
+            $("#showResult").css("color","red");
+            return;
         }
-    });
+        if(password == "") {
+            $("#showResult").text("密码不能为空");
+            $("#showResult").css("color","red");
+            return;
+        }
 
-    //记住用户名密码
-    function Save() {
-        if ($("#ck_rmbUser").attr("checked")) {
-            var str_username = $("#username").val();
-            console.log(str_username);
-            var str_password = $("#password").val();
-            $.cookie("rmbUser", "true", { expires: 7 }); //存储一个带7天期限的cookie
-            $.cookie("username", str_username, { expires: 7 });
-            $.cookie("password", str_password, { expires: 7 });
-        }
-        else {
+        // 记住用户名密码
+        if ($("#ck_rmbUser").prop("checked")) {
+            $.cookie("rmbUser", "true", { expires: 7 }); // 存储一个带7天期限的cookie
+            $.cookie("username", username, { expires: 7 });
+            $.cookie("password", password, { expires: 7 });
+        } else {
             $.cookie("rmbUser", "false", { expire: -1 });
             $.cookie("username", "", { expires: -1 });
             $.cookie("password", "", { expires: -1 });
         }
-    };
+
+        // 发送登录请求
+        $.ajax({
+            type: "POST",
+            url: "../user/login.do",
+            data: {
+                "username": username,
+                "password": password
+            },
+            dataType: "json",
+            success: function(result) {
+                if(result.state === 1) {
+                    // 登录成功
+                    $("#showResult").text("登录成功，即将跳转...");
+                    $("#showResult").css("color","green");
+
+                    // 将用户信息保存到sessionStorage
+                    sessionStorage.setItem("loginUser", JSON.stringify(result.data));
+
+                    // 延迟跳转到首页
+                    setTimeout(function() {
+                        location.href = '../user/showIndex.do';
+                    }, 1000);
+                } else {
+                    // 登录失败
+                    $("#showResult").text(result.message);
+                    $("#showResult").css("color","red");
+                }
+            },
+            error: function() {
+                $("#showResult").text("登录请求发送失败，请稍后再试！");
+                $("#showResult").css("color","red");
+            }
+        });
+    });
+</script>
+<script type="text/javascript">
+    // 页面加载时，如果有记住密码的cookie，则自动填充
+    $(document).ready(function () {
+        if ($.cookie("rmbUser") == "true") {
+            $("#ck_rmbUser").prop("checked", true);
+            $("#username").val($.cookie("username"));
+            $("#password").val($.cookie("password"));
+        }
+    });
 </script>
 </body>
 </html>

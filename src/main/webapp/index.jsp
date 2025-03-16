@@ -30,7 +30,7 @@
 <div id="container">
     <div id="cover" class="rt">
         <ul>
-            <li><a href="index.jsp">首页</a></li>
+            <li><a href="user/showIndex.do">首页</a></li>
             <li><a href="user/showLogin.do">登录页</a></li>
             <li><a href="user/showRegister.do">注册</a></li>
 <%--            <li><a href="web/404.html">404错误 404.html</a></li>--%>

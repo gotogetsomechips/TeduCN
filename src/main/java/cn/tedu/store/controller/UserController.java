@@ -86,6 +86,32 @@ public class UserController {
         return result;
     }
 
+    @RequestMapping(value = "/login.do", method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseResult<TUser> login(String username, String password) {
+        ResponseResult<TUser> result = new ResponseResult<>();
+        try {
+            // 调用业务层执行登录
+            TUser loginUser = userService.login(username, password);
+
+            if (loginUser != null) {
+                // 登录成功
+                result.setState(1);
+                result.setMessage("登录成功！");
+                result.setData(loginUser);
+            } else {
+                // 登录失败
+                result.setState(0);
+                result.setMessage("用户名或密码错误！");
+            }
+        } catch (Exception e) {
+            // 登录异常
+            result.setState(-1);
+            result.setMessage("登录失败：" + e.getMessage());
+        }
+        return result;
+    }
+
     @RequestMapping("showRegister.do")
     public String showRegister(){
         return "register";
@@ -93,5 +119,9 @@ public class UserController {
     @RequestMapping("showLogin.do")
     public String showLogin(){
         return "login";
+    }
+    @RequestMapping("showIndex.do")
+    public String showIndex(){
+        return "index";
     }
 }
