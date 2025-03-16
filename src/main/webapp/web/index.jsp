@@ -16,7 +16,51 @@
   <link href="../css/animate.css" rel="stylesheet"/>
   <link href="../css/index.css" rel="stylesheet"/>
   <link href="../css/slide.css" rel="stylesheet"/>
+  <style>
+    /* 用户信息样式 */
+    .user_info {
+      position: relative;
+      display: inline-block;
+    }
+
+    /* 用户名显示样式 */
+    #username_show {
+      color: #0aa1ed;
+      cursor: pointer;
+    }
+
+    /* 下拉菜单容器 */
+    .dropdown_menu {
+      position: absolute;
+      top: 20px;
+      right: 0;
+      background-color: white;
+      min-width: 100px;
+      box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+      z-index: 999;
+      border-radius: 3px;
+      padding: 5px 0;
+    }
+
+    /* 下拉菜单项目 */
+    .dropdown_menu a {
+      color: #333;
+      padding: 8px 10px;
+      text-decoration: none;
+      display: block;
+      text-align: center;
+    }
+
+    /* 鼠标悬停效果 */
+    .dropdown_menu a:hover {
+      background-color: #f1f1f1;
+      color: #0aa1ed;
+    }
+  </style>
 </head>
+<script src="../js/jquery-3.1.1.min.js"></script>
+<script src="../js/index.js"></script>
+<script src="../js/slide.js"></script>
 <body>
 <!-- 页面顶部-->
 <header id="top" class="fixed_nav">
@@ -25,15 +69,57 @@
   </div>
   <div id="top_input" class="lf">
     <input id="input" type="text" placeholder="请输入您要搜索的内容"/>
-    <a href="search.html" class="rt"><img id="search" src="../images/header/search.png" alt="搜索"/></a>
+    <a href="showSearch.do" class="rt"><img id="search" src="../images/header/search.png" alt="搜索"/></a>
   </div>
   <div class="rt">
     <ul class="lf">
-      <li><a href="favorites.html" title="我的收藏"><img class="care" src="../images/header/care.png" alt=""/></a><b>|</b></li>
-      <li><a href="orders.html" title="我的订单"><img class="order" src="../images/header/order.png" alt=""/></a><b>|</b></li>
-      <li><a href="cart.html" title="我的购物车"><img class="shopcar" src="../images/header/shop_car.png" alt=""/></a><b>|</b></li>
-      <li><a href="help.html">帮助</a><b>|</b></li>
-      <li><a href="showLogin.do">登录</a></li>
+      <li><a href="showFavorites.do" title="我的收藏"><img class="care" src="../images/header/care.png" alt=""/></a><b>|</b></li>
+      <li><a href="showOrders.do" title="我的订单"><img class="order" src="../images/header/order.png" alt=""/></a><b>|</b></li>
+      <li><a href="showCart.do" title="我的购物车"><img class="shopcar" src="../images/header/shop_car.png" alt=""/></a><b>|</b></li>
+      <li><a href="showHelp.do">帮助</a><b>|</b></li>
+      <!-- 登录判断逻辑 -->
+      <li id="login_info">
+        <script>
+          // 页面加载时判断是否已登录
+          $(function(){
+            // 从 sessionStorage 获取登录用户信息
+            var userInfo = sessionStorage.getItem("loginUser");
+            if(userInfo){
+              // 已登录，解析用户数据
+              var user = JSON.parse(userInfo);
+              // 显示用户名和下拉菜单
+              $("#login_info").html('<div class="user_info">' +
+                      '<a href="javascript:void(0);" id="username_show">' + user.username + '</a>' +
+                      '<div class="dropdown_menu" style="display:none;">' +
+                      '<a href="showPersonage.do">修改个人信息</a>' +
+                      '<a href="javascript:void(0);" id="logout">退出登录</a>' +
+                      '</div>' +
+                      '</div>');
+
+              // 绑定鼠标悬停事件
+              $(".user_info").hover(
+                      function() {
+                        $(this).find(".dropdown_menu").show();
+                      },
+                      function() {
+                        $(this).find(".dropdown_menu").hide();
+                      }
+              );
+
+              // 绑定退出登录事件
+              $("#logout").click(function(){
+                // 清除会话存储的用户信息
+                sessionStorage.removeItem("loginUser");
+                // 跳转到首页
+                location.href = "showIndex.do";
+              });
+            } else {
+              // 未登录，显示登录链接
+              $("#login_info").html('<a href="showLogin.do">登录</a>');
+            }
+          });
+        </script>
+      </li>
     </ul>
   </div>
 </header>
@@ -49,19 +135,19 @@
 <div class="ck-slide">
   <ul class="ck-slide-wrapper">
     <li>
-      <a href="product_details.html"><img src="../images/itemCat/itemCat_banner1.png" alt=""></a>
+      <a href="showProduct_Details.do"><img src="../images/itemCat/itemCat_banner1.png" alt=""></a>
     </li>
     <li style="display:none">
-      <a href="product_details.html"><img src="../images/itemCat/itemCat_banner2.png" alt=""></a>
+      <a href="showProduct_Details.do"><img src="../images/itemCat/itemCat_banner2.png" alt=""></a>
     </li>
     <li style="display:none">
-      <a href="product_details.html"><img src="../images/itemCat/itemCat_banner3.png" alt=""></a>
+      <a href="showProduct_Details.do"><img src="../images/itemCat/itemCat_banner3.png" alt=""></a>
     </li>
     <li style="display:none">
-      <a href="product_details.html"><img src="../images/itemCat/itemCat_banner4.png" alt=""></a>
+      <a href="showProduct_Details.do"><img src="../images/itemCat/itemCat_banner4.png" alt=""></a>
     </li>
     <li style="display:none">
-      <a href="product_details.html"><img src="../images/itemCat/itemCat_banner1.png" alt=""></a>
+      <a href="showProduct_Details.do"><img src="../images/itemCat/itemCat_banner1.png" alt=""></a>
     </li>
   </ul>
   <a href="javascript:;" class="ctrl-slide ck-prev">上一张</a> <a href="javascript:;" class="ctrl-slide ck-next">下一张</a>
@@ -96,7 +182,7 @@
 
         <p class="top_ys3">￥4999.00</p>
 
-        <p class="top_ys4 color_2"><a href="product_details.html">查看详情</a></p>
+        <p class="top_ys4 color_2"><a href="showProduct_Details.do">查看详情</a></p>
       </div>
       <span><img src="../images/itemCat/study_computer_img1.png" alt=""/></span>
     </div>
@@ -113,7 +199,7 @@
 
         <p class="top_ys3">￥6888.00</p>
 
-        <p class="top_ys4 color_2"><a href="product_details.html">查看详情</a></p>
+        <p class="top_ys4 color_2"><a href="showProduct_Details.do">查看详情</a></p>
       </div>
       <span><img src="../images/itemCat/study_computer_img2.png" alt=""/></span>
     </div>
@@ -163,7 +249,7 @@
 
       <p class="bottom_ys3">￥4600.00</p>
 
-      <p class="bottom_ys4 color_2"><a href="product_details.html">查看详情</a></p>
+      <p class="bottom_ys4 color_2"><a href="showProduct_Details.do">查看详情</a></p>
     </div>
     <div class="item_msg lf">
       <img src="../images/itemCat/study_computer_img4.png" alt=""/>
@@ -172,7 +258,7 @@
 
       <p class="bottom_ys3">￥5600.00</p>
 
-      <p class="bottom_ys4 color_2"><a href="product_details.html">查看详情</a></p>
+      <p class="bottom_ys4 color_2"><a href="showProduct_Details.do">查看详情</a></p>
     </div>
     <div class="item_msg lf">
       <img src="../images/itemCat/study_computer_img5.png" alt=""/>
@@ -181,7 +267,7 @@
 
       <p class="bottom_ys3">￥6600.00</p>
 
-      <p class="bottom_ys4 color_2"><a href="product_details.html">查看详情</a></p>
+      <p class="bottom_ys4 color_2"><a href="showProduct_Details.do">查看详情</a></p>
     </div>
   </div>
 </div>
@@ -202,7 +288,7 @@
 
         <p class="top_ys3 price_ys3">仅售 ￥49.00</p>
 
-        <p class="top_ys4 color_1"><a href="product_details.html">查看详情</a></p>
+        <p class="top_ys4 color_1"><a href="showProduct_Details.do">查看详情</a></p>
       </div>
     </div>
     <!-- 上面部分右侧区域-->
@@ -215,7 +301,7 @@
         </p>
         <p class="top_ys3 price_ys3">仅售 ￥28.00</p>
 
-        <p class="top_ys4 color_1"><a href="product_details.html">查看详情</a></p>
+        <p class="top_ys4 color_1"><a href="showProduct_Details.do">查看详情</a></p>
       </div>
     </div>
   </div>
@@ -264,7 +350,7 @@
 
       <p class="bottom_ys3 price_ys3">￥58.00</p>
 
-      <p class="bottom_ys4 color_1"><a href="product_details.html">查看详情</a></p>
+      <p class="bottom_ys4 color_1"><a href="showProduct_Details.do">查看详情</a></p>
     </div>
     <div class="item_msg lf">
       <img src="../images/itemCat/study_stationery_img4.png" alt=""/>
@@ -273,15 +359,15 @@
 
       <p class="bottom_ys3 price_ys3">￥12.00</p>
 
-      <p class="bottom_ys4 color_1"><a href="product_details.html">查看详情</a></p>
+      <p class="bottom_ys4 color_1"><a href="showProduct_Details.do">查看详情</a></p>
     </div>
 
     <div class="item_msg lf">
-      <a href="product_details.html">
+      <a href="showProduct_Details.do">
         <img src="../images/itemCat/study_stationery_img5.png" alt=""/>
         <p class="bottom_ys2">齐心皮面日程本子2017.1-2018.6计划记事本效率手册</p>
         <p class="bottom_ys3 price_ys3">￥23.00</p>
-        <p class="bottom_ys4 color_1"><a href="product_details.html" id="iii">查看详情</a></p>
+        <p class="bottom_ys4 color_1"><a href="showProduct_Details.do" id="iii">查看详情</a></p>
       </a>
     </div>
 
@@ -353,9 +439,7 @@
     </div>
   </div>
 </div>
-<script src="../js/jquery-3.1.1.min.js"></script>
-<script src="../js/index.js"></script>
-<script src="../js/slide.js"></script>
+
 <script>
   $('.ck-slide').ckSlide({
     autoPlay: true,//默认为不自动播放，需要时请以此设置

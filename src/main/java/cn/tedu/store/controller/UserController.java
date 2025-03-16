@@ -14,6 +14,73 @@ import javax.annotation.Resource;
 @RequestMapping("/user")
 public class UserController {
 
+    @RequestMapping("showRegister.do")
+    public String showRegister(){
+        return "register";
+    }
+
+    @RequestMapping("showLogin.do")
+    public String showLogin(){
+        return "login";
+    }
+
+    @RequestMapping("showIndex.do")
+    public String showIndex(){return "index";}
+
+    @RequestMapping("show404.do")
+    public String show404(){return "404";}
+
+    @RequestMapping("show500.do")
+    public String show500(){return "500";}
+
+    @RequestMapping("showAddressAdmin.do")
+    public String showAddressAdmin(){return "addressAdmin";}
+
+    @RequestMapping("showCart.do")
+    public String showCart(){return "cart";}
+
+    @RequestMapping("showEmptyOrders.do")
+    public String showEmptyOrders(){return "emptyOrders";}
+
+    @RequestMapping("showFavorites.do")
+    public String favorites(){return "favorites";}
+
+    @RequestMapping("showHelp.do")
+    public String help(){return "help";}
+
+    @RequestMapping("showLookforward.do")
+    public String lookforward(){return "lookforward";}
+
+    @RequestMapping("showOrderConfirm.do")
+    public String orderConfirm(){return "orderConfirm";}
+
+    @RequestMapping("showOrderInfo.do")
+    public String orderInfo(){return "orderInfo";}
+
+    @RequestMapping("showOrders.do")
+    public String orders(){return "orders";}
+
+    @RequestMapping("showPay_Fail.do")
+    public String payFail(){return "pay_fail";}
+
+    @RequestMapping("showPay_Success.do")
+    public String paySuccess(){return "pay_success";}
+
+    @RequestMapping("showPayment.do")
+    public String payment(){return "payment";}
+
+    @RequestMapping("showPersonage.do")
+    public String personage(){return "personage";}
+
+    @RequestMapping("showPersonal_Password.do")
+    public String personagePassword(){return "personal_password";}
+
+    @RequestMapping("showProduct_Details.do")
+    public String productDetails(){return "product_details";}
+
+    @RequestMapping("showSearch.do")
+    public String search(){return "search";}
+
     @Resource
     private IUserService userService;
 
@@ -48,8 +115,6 @@ public class UserController {
         }
         return result1;
     }
-
-
 
     //验证手机号是否存在
     @RequestMapping("/checkPhone.do")
@@ -111,23 +176,4 @@ public class UserController {
         }
         return result;
     }
-
-    @RequestMapping("showRegister.do")
-    public String showRegister(){
-        return "register";
-    }
-
-    @RequestMapping("showLogin.do")
-    public String showLogin(){
-        return "login";
-    }
-
-    @RequestMapping("showIndex.do")
-    public String showIndex(){return "index";}
-
-    @RequestMapping("show404.do")
-    public String show404(){return "404";}
-
-    @RequestMapping("show500.do")
-    public String show500(){return "500";}
 }

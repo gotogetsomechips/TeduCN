@@ -28,24 +28,24 @@
   </div>
   <div id="top_input" class="lf">
     <input id="input" type="text" placeholder="请输入您要搜索的内容"/>
-    <a href="search.html" class="rt"><img id="search" src="../images/header/search.png" alt="搜索"/></a>
+    <a href="../user/showSearch.do" class="rt"><img id="search" src="../images/header/search.png" alt="搜索"/></a>
   </div>
   <div class="rt">
     <ul class="lf">
-      <li><a href="favorites.html" title="我的收藏"><img class="care" src="../images/header/care.png" alt=""/></a><b>|</b></li>
-      <li><a href="orders.html" title="我的订单"><img class="order" src="../images/header/order.png" alt=""/></a><b>|</b></li>
-      <li><a href="cart.html" title="我的购物车"><img class="shopcar" src="../images/header/shop_car.png" alt=""/></a><b>|</b></li>
-      <li><a href="help.html">帮助</a><b>|</b></li>
-      <li><a href="login.html">登录</a></li>
+      <li><a href="../user/showFavorites.do" title="我的收藏"><img class="care" src="../images/header/care.png" alt=""/></a><b>|</b></li>
+      <li><a href=../user/showOrders.do title="我的订单"><img class="order" src="../images/header/order.png" alt=""/></a><b>|</b></li>
+      <li><a href="../user/showCart.do" title="我的购物车"><img class="shopcar" src="../images/header/shop_car.png" alt=""/></a><b>|</b></li>
+      <li><a href="../user/showHelp.do">帮助</a><b>|</b></li>
+      <li><a href="../user/showLogin.do">登录</a></li>
     </ul>
   </div>
 </header>
 <!-- nav主导航-->
 <nav id="nav">
   <ul>
-    <li><a href="index.html" class="acti">首页</a></li>
-    <li><a href="index.html#computer" >电脑办公</a></li>
-    <li><a href="index.html#stationery" >办公文具</a></li>
+    <li><a href="../user/showIndex.do" class="acti">首页</a></li>
+    <li><a href="../user/showIndex.do#computer" >电脑办公</a></li>
+    <li><a href="../user/showIndex.do#stationery" >办公文具</a></li>
   </ul>
 </nav>
 <div id="navlist">
@@ -62,7 +62,7 @@
   </ul>
 </div>
 <!--订单确认-->
-<form action="pay_success.html" method="post" id="pay_form">
+<form action="../user/showPay_Success.do" method="post" id="pay_form">
   <div id="container" class="clearfix" >
     <!-- 支付订单信息-->
     <div class="pay_info">
@@ -103,7 +103,7 @@
             剩余付款时间：<b>15：00</b>
           <!--获取待支付时间并更改订单状态-->
         </span>
-      <span class="okPay"><a href="pay_success.html">确认支付</a></span>
+      <span class="okPay"><a href="../user/showPay_Success.do">确认支付</a></span>
       <!-- <input type="submit" value="立即付款"> -->
     </div>
 

@@ -24,24 +24,24 @@
   </div>
   <div id="top_input" class="lf">
     <input id="input" type="text" placeholder="请输入您要搜索的内容"/>
-    <a href="search.html" class="rt"><img id="search" src="../images/header/search.png" alt="搜索"/></a>
+    <a href="../user/showSearch.do" class="rt"><img id="search" src="../images/header/search.png" alt="搜索"/></a>
   </div>
   <div class="rt">
     <ul class="lf">
-      <li><a href="favorites.html" title="我的收藏"><img class="care" src="../images/header/care.png" alt=""/></a><b>|</b></li>
-      <li><a href="orders.html" title="我的订单"><img class="order" src="../images/header/order.png" alt=""/></a><b>|</b></li>
-      <li><a href="cart.html" title="我的购物车"><img class="shopcar" src="../images/header/shop_car.png" alt=""/></a><b>|</b></li>
-      <li><a href="help.html">帮助</a><b>|</b></li>
-      <li><a href="login.html">登录</a></li>
+      <li><a href="../user/showFavorites.do" title="我的收藏"><img class="care" src="../images/header/care.png" alt=""/></a><b>|</b></li>
+      <li><a href="..//user/showOrders.do" title="我的订单"><img class="order" src="../images/header/order.png" alt=""/></a><b>|</b></li>
+      <li><a href="../user/showCart.do" title="我的购物车"><img class="shopcar" src="../images/header/shop_car.png" alt=""/></a><b>|</b></li>
+      <li><a href="../user/showOrders.do">帮助</a><b>|</b></li>
+      <li><a href="../user/showLogin.do">登录</a></li>
     </ul>
   </div>
 </header>
 <!-- nav主导航-->
 <nav id="nav">
   <ul>
-    <li><a href="index.html" class="acti">首页</a></li>
-    <li><a href="index.html#computer" >电脑办公</a></li>
-    <li><a href="index.html#stationery" >办公文具</a></li>
+    <li><a href="../user/showIndex.do" class="acti">首页</a></li>
+    <li><a href="../user/showIndex.do#computer" >电脑办公</a></li>
+    <li><a href="../user/showIndex.do#stationery" >办公文具</a></li>
   </ul>
 </nav>
 <!-- 内容-->
@@ -114,7 +114,7 @@
     </p>
     <!-- 购买部分-->
     <div class="shops">
-      <a href="cart.html" class="buy lf" id="buy_now">立即购买</a>
+      <a href="../user/showCart.do" class="buy lf" id="buy_now">立即购买</a>
       <a href="#" class="shop lf" id="add_cart"><img src="../images/product_detail/product_detail_img7.png" alt=""/>加入购物车</a>
       <a href="#" class="collection lf" id="collect"><span>收藏</span></a><b><img src="../images/product_detail/product_detail_img6.png"                                                                       alt=""/></b>
     </div>
@@ -165,7 +165,7 @@
     <div class="tab lf">
       <div class="cat">
         <span class="active"><a href="">商品详情</a></span>
-        <span><a href="lookforward.html">商品评价</a></span>
+        <span><a href="../user/showLookforward.do">商品评价</a></span>
       </div>
     </div>
     <div class="cart rt">
