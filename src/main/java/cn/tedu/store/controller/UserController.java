@@ -36,7 +36,19 @@ public class UserController {
     public String show500(){return "500";}
 
     @RequestMapping("showAddressAdmin.do")
-    public String showAddressAdmin(){return "addressAdmin";}
+    public String showAddressAdmin(HttpSession session, Model model) {
+        // 从session中获取登录用户信息
+        TUser loginUser = (TUser) session.getAttribute("loginUser");
+
+        // 如果用户未登录，重定向到登录页面
+        if (loginUser == null) {
+            return "redirect:/user/showLogin.do";
+        }
+
+        // 将用户信息添加到model中
+        model.addAttribute("user", loginUser);
+        return "addressAdmin";
+    }
 
     @RequestMapping("showCart.do")
     public String showCart(){return "cart";}

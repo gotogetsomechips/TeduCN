@@ -32,19 +32,19 @@ $("#receiverMobile").blur(function(){
 /**
  * 提交表单时，校验必填项是否填写完整
  */
-$(".save_recipient").click(function(){
-	var receiverName = $("#receiverName").val();// 收件人
-	var receiverState = $("#receiverState").val();// 省
-	var receiverCity = $("#receiverCity").val();// 市
-	var receiverDistrict = $("#receiverDistrict").val();// 区/县
-	var receiverAddress = $("#receiverAddress").val();// 
-	var receiverMobile = $("#receiverMobile").val();
-	if(receiverName && receiverState && receiverCity && receiverDistrict && receiverAddress && receiverMobile){
-		$("form").submit();
-	}else{
-		alert("请将必填信息填写完整");
-	}
-})
+// $(".save_recipient").click(function(){
+// 	var receiverName = $("#receiverName").val();// 收件人
+// 	var receiverState = $("#receiverState").val();// 省
+// 	var receiverCity = $("#receiverCity").val();// 市
+// 	var receiverDistrict = $("#receiverDistrict").val();// 区/县
+// 	var receiverAddress = $("#receiverAddress").val();//
+// 	var receiverMobile = $("#receiverMobile").val();
+// 	if(receiverName && receiverState && receiverCity && receiverDistrict && receiverAddress && receiverMobile){
+// 		$("form").submit();
+// 	}else{
+// 		alert("请将必填信息填写完整");
+// 	}
+// })
 
 /**
  * 地址设为默认点击事件

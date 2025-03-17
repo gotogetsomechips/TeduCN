@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.tedu.store.mapper.AddressMapper">
+    <select id="selectAddressByUserId" resultType="cn.tedu.store.bean.DeliveryAddress">
+        select
+            id,
+            user_id as userId,
+            address_name as addressName,
+            recipient_name as recipientName,
+            address_details as addressDetails,
+            postal_code as postalCode,
+            phone,
+            is_default as isDefault,
+            province_code as provinceCode,
+            city_code as cityCode,
+            district_code as districtCode,
+            created_time as createdTime,
+            modified_time as modifiedTime
+        from
+            delivery_address
+        where
+            user_id = #{userId}
+        order by
+            is_default desc,
+            modified_time desc
+    </select>
+
+    <select id="selectAddressById" resultType="cn.tedu.store.bean.DeliveryAddress">
+        select
+            id,
+            user_id as userId,
+            address_name as addressName,
+            recipient_name as recipientName,
+            address_details as addressDetails,
+            postal_code as postalCode,
+            phone,
+            is_default as isDefault,
+            province_code as provinceCode,
+            city_code as cityCode,
+            district_code as districtCode,
+            created_time as createdTime,
+            modified_time as modifiedTime
+        from
+            delivery_address
+        where
+            id = #{id}
+    </select>
+
+    <select id="selectDefaultAddress" resultType="cn.tedu.store.bean.DeliveryAddress">
+        select
+            id,
+            user_id as userId,
+            address_name as addressName,
+            recipient_name as recipientName,
+            address_details as addressDetails,
+            postal_code as postalCode,
+            phone,
+            is_default as isDefault,
+            province_code as provinceCode,
+            city_code as cityCode,
+            district_code as districtCode,
+            created_time as createdTime,
+            modified_time as modifiedTime
+        from
+            delivery_address
+        where
+            user_id = #{userId}
+          and is_default = 1
+            limit 1
+    </select>
+
+    <insert id="insertAddress" parameterType="cn.tedu.store.bean.DeliveryAddress" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO delivery_address (
+            user_id, address_name, recipient_name, address_details,
+            postal_code, phone, is_default, province_code, city_code, district_code,
+            created_time, modified_time
+        ) VALUES (
+                     #{userId}, #{addressName}, #{recipientName}, #{addressDetails},
+                     #{postalCode}, #{phone}, #{isDefault}, #{provinceCode}, #{cityCode}, #{districtCode},
+                     #{createdTime}, #{modifiedTime}
+                 )
+    </insert>
+
+    <update id="updateAddress" parameterType="cn.tedu.store.bean.DeliveryAddress">
+        UPDATE delivery_address
+        <set>
+            <if test="addressName != null">address_name = #{addressName},</if>
+            <if test="recipientName != null">recipient_name = #{recipientName},</if>
+            <if test="addressDetails != null">address_details = #{addressDetails},</if>
+            <if test="postalCode != null">postal_code = #{postalCode},</if>
+            <if test="phone != null">phone = #{phone},</if>
+            <if test="isDefault != null">is_default = #{isDefault},</if>
+            <if test="provinceCode != null">province_code = #{provinceCode},</if>
+            <if test="cityCode != null">city_code = #{cityCode},</if>
+            <if test="districtCode != null">district_code = #{districtCode},</if>
+            modified_time = #{modifiedTime}
+        </set>
+        WHERE id = #{id}
+    </update>
+
+    <update id="updateNonDefaultByUserId">
+        UPDATE delivery_address
+        SET is_default = 0
+        WHERE user_id = #{userId}
+    </update>
+
+    <update id="updateDefaultAddress">
+        UPDATE delivery_address
+        SET is_default = 1
+        WHERE id = #{id}
+    </update>
+
+    <delete id="deleteAddress">
+        DELETE FROM delivery_address
+        WHERE id = #{id}
+    </delete>
+</mapper>
