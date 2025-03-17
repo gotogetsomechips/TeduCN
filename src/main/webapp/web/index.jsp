@@ -62,75 +62,7 @@
 <script src="../js/index.js"></script>
 <script src="../js/slide.js"></script>
 <body>
-<!-- 页面顶部-->
-<header id="top" class="fixed_nav">
-  <div id="logo" class="lf">
-    <img class="animated jello" src="../images/header/logo.png" alt="logo"/>
-  </div>
-  <div id="top_input" class="lf">
-    <input id="input" type="text" placeholder="请输入您要搜索的内容"/>
-    <a href="showSearch.do" class="rt"><img id="search" src="../images/header/search.png" alt="搜索"/></a>
-  </div>
-  <div class="rt">
-    <ul class="lf">
-      <li><a href="showFavorites.do" title="我的收藏"><img class="care" src="../images/header/care.png" alt=""/></a><b>|</b></li>
-      <li><a href="showOrders.do" title="我的订单"><img class="order" src="../images/header/order.png" alt=""/></a><b>|</b></li>
-      <li><a href="showCart.do" title="我的购物车"><img class="shopcar" src="../images/header/shop_car.png" alt=""/></a><b>|</b></li>
-      <li><a href="showHelp.do">帮助</a><b>|</b></li>
-      <!-- 登录判断逻辑 -->
-      <li id="login_info">
-        <script>
-          // 页面加载时判断是否已登录
-          $(function(){
-            // 从 sessionStorage 获取登录用户信息
-            var userInfo = sessionStorage.getItem("loginUser");
-            if(userInfo){
-              // 已登录，解析用户数据
-              var user = JSON.parse(userInfo);
-              // 显示用户名和下拉菜单
-              $("#login_info").html('<div class="user_info">' +
-                      '<a href="javascript:void(0);" id="username_show">' + user.username + '</a>' +
-                      '<div class="dropdown_menu" style="display:none;">' +
-                      '<a href="showPersonage.do">修改个人信息</a>' +
-                      '<a href="javascript:void(0);" id="logout">退出登录</a>' +
-                      '</div>' +
-                      '</div>');
-
-              // 绑定鼠标悬停事件
-              $(".user_info").hover(
-                      function() {
-                        $(this).find(".dropdown_menu").show();
-                      },
-                      function() {
-                        $(this).find(".dropdown_menu").hide();
-                      }
-              );
-
-              // 绑定退出登录事件
-              $("#logout").click(function(){
-                // 清除会话存储的用户信息
-                sessionStorage.removeItem("loginUser");
-                // 跳转到首页
-                location.href = "showIndex.do";
-              });
-            } else {
-              // 未登录，显示登录链接
-              $("#login_info").html('<a href="showLogin.do">登录</a>');
-            }
-          });
-        </script>
-      </li>
-    </ul>
-  </div>
-</header>
-<!-- nav主导航-->
-<nav id="nav">
-  <ul>
-    <li><a href="showIndex.do" class="acti">首页</a></li>
-    <li><a href="showIndex.do#computer" >电脑办公</a></li>
-    <li><a href="showIndex.do#stationery" >办公文具</a></li>
-  </ul>
-</nav>
+<jsp:include page="header.jsp" />
 <!-- banner部分-->
 <div class="ck-slide">
   <ul class="ck-slide-wrapper">
