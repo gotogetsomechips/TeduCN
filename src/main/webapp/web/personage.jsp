@@ -83,41 +83,42 @@
     </div>
 
     <!--个人信息具体内容 -->
+    <!-- 在rs_content div中 -->
     <div class="rs_content">
       <!--头像-->
       <div class="rs_content_headPortrait">
         <span class="same">我的头像：</span>
         <img src="../images/personage/touxiang.png" alt="" id="icon" width="50px" height="50px"/>
         <input type="hidden" name="iconPic" value="" id="iconPic">
-        <span class="change_headPortrait same_click" data-toggle="modal" data-target="#avatar-modal" >更改头像</span>
+        <span class="change_headPortrait same_click" data-toggle="modal" data-target="#avatar-modal">更改头像</span>
       </div>
       <!--用户名-->
       <div class="rs_content_username">
         <span class="same">用户名：</span>
-        <span class="same rs_username">王小明</span>
-        <input class="ed_username" value="" style="display: none;"/>
+        <span class="same rs_username">${user.username}</span>
+        <input class="ed_username" value="${user.username}" style="display: none;"/>
         <span class="change_username same_click">更改用户名</span>
       </div>
       <!--性别-->
       <div class="rs_content_sex">
         <span class="same">性别：</span>
-        <span class="man selected">
-                    <img src="../images/personage/select.png" alt=""/>男
-                </span>
-        <span class="women">
-                    <img src="../images/personage/un_select.png" alt=""/>女
-                </span>
+        <span class="man ${user.gender == 1 ? 'selected' : ''}">
+      <img src="../images/personage/${user.gender == 1 ? 'select' : 'un_select'}.png" alt=""/>男
+    </span>
+        <span class="women ${user.gender == 0 ? 'selected' : ''}">
+      <img src="../images/personage/${user.gender == 0 ? 'select' : 'un_select'}.png" alt=""/>女
+    </span>
       </div>
       <!--绑定电话-->
       <div class="rs_content_tel">
         <span class="same">绑定电话：</span>
-        <input type="text" value=""/>
+        <input type="text" id="phone" value="${user.phone}"/>
       </div>
       <!--绑定邮箱-->
       <div class="rs_content_mail">
         <span class="same">绑定邮箱：</span>
-        <input class="ed_email" value="" style="display: none;"/>
-        <span class="rs_mail">liuranicon@163.com</span>
+        <input class="ed_email" value="${user.email}" style="display: none;"/>
+        <span class="rs_mail">${user.email}</span>
         <span class="same_click change_mail">更改邮箱</span>
       </div>
       <!--保存按钮-->
@@ -349,5 +350,219 @@
     var url = $("#imageHead img").attr("src");
     $('#icon').attr('src',url);
   })
+</script>
+<script>
+  $(function() {
+    // 处理性别选择
+    $(".man").click(function() {
+      $(this).addClass("selected").find("img").attr("src", "../images/personage/select.png");
+      $(".women").removeClass("selected").find("img").attr("src", "../images/personage/un_select.png");
+    });
+
+    $(".women").click(function() {
+      $(this).addClass("selected").find("img").attr("src", "../images/personage/select.png");
+      $(".man").removeClass("selected").find("img").attr("src", "../images/personage/un_select.png");
+    });
+
+    // 处理用户名更改
+    $(".change_username").click(function() {
+      $(".rs_username").hide();
+      $(".ed_username").show();
+      $(this).hide();
+      // 为用户名输入框添加提示信息
+      if($(".username_msg").length == 0) {
+        $(".ed_username").after('<span class="username_msg msg-default">用户名长度在6到9位之间</span>');
+      }
+    });
+
+    // 处理邮箱更改
+    $(".change_mail").click(function() {
+      $(".rs_mail").hide();
+      $(".ed_email").show();
+      $(this).hide();
+      // 为邮箱输入框添加提示信息
+      if($(".email_msg").length == 0) {
+        $(".ed_email").after('<span class="email_msg msg-default">请输入合法的邮箱地址</span>');
+      }
+    });
+
+    // 添加用户名验证
+    $(".ed_username").blur(function() {
+      var username = $(this).val();
+      if(username == "") {
+        $(".username_msg").html("用户名不能为空");
+        $(".username_msg").attr("class", "username_msg msg-error");
+        return false;
+      } else if(username.length < 6 || username.length > 9) {
+        $(".username_msg").html("用户名长度在6到9位之间");
+        $(".username_msg").attr("class", "username_msg msg-error");
+        return false;
+      } else {
+        // 检查用户名是否已被占用
+        $.ajax({
+          url: "../user/checkUsername.do",
+          data: "username=" + username,
+          type: "get",
+          dataType: "json",
+          success: function(obj) {
+            $(".username_msg").html(obj.message);
+            if(obj.state == 0) {
+              $(".username_msg").attr("class", "username_msg msg-error");
+            } else {
+              $(".username_msg").attr("class", "username_msg msg-success");
+            }
+          }
+        });
+      }
+    }).focus(function() {
+      $(".username_msg").html("用户名长度在6到9位之间");
+      $(".username_msg").attr("class", "username_msg msg-default");
+    });
+
+    // 添加邮箱验证
+    $(".ed_email").blur(function() {
+      var email = $(this).val();
+      var emailRegex = /^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/;
+
+      if(email == "") {
+        $(".email_msg").html("邮箱不能为空");
+        $(".email_msg").attr("class", "email_msg msg-error");
+        return false;
+      } else if(!emailRegex.test(email)) {
+        $(".email_msg").html("邮箱格式不正确");
+        $(".email_msg").attr("class", "email_msg msg-error");
+        return false;
+      } else {
+        // 检查邮箱是否已被占用
+        $.ajax({
+          url: "../user/checkEmail.do",
+          data: "email=" + email,
+          type: "get",
+          dataType: "json",
+          success: function(obj) {
+            $(".email_msg").html(obj.message);
+            if(obj.state == 0) {
+              $(".email_msg").attr("class", "email_msg msg-error");
+            } else {
+              $(".email_msg").attr("class", "email_msg msg-success");
+            }
+          }
+        });
+      }
+    }).focus(function() {
+      $(".email_msg").html("请输入合法的邮箱地址");
+      $(".email_msg").attr("class", "email_msg msg-default");
+    });
+
+    // 添加手机号验证
+    $("#phone").blur(function() {
+      var phone = $(this).val();
+      var phoneRegex = /^1[3-9]\d{9}$/;
+
+      if(phone == "") {
+        if($(".phone_msg").length == 0) {
+          $(this).after('<span class="phone_msg msg-error">手机号不能为空</span>');
+        } else {
+          $(".phone_msg").html("手机号不能为空");
+          $(".phone_msg").attr("class", "phone_msg msg-error");
+        }
+        return false;
+      } else if(!phoneRegex.test(phone)) {
+        if($(".phone_msg").length == 0) {
+          $(this).after('<span class="phone_msg msg-error">手机号格式不正确</span>');
+        } else {
+          $(".phone_msg").html("手机号格式不正确");
+          $(".phone_msg").attr("class", "phone_msg msg-error");
+        }
+        return false;
+      } else {
+        // 检查手机号是否已被占用
+        $.ajax({
+          url: "../user/checkPhone.do",
+          data: "phone=" + phone,
+          type: "get",
+          dataType: "json",
+          success: function(obj) {
+            if($(".phone_msg").length == 0) {
+              $("#phone").after('<span class="phone_msg">' + obj.message + '</span>');
+            } else {
+              $(".phone_msg").html(obj.message);
+            }
+
+            if(obj.state == 0) {
+              $(".phone_msg").attr("class", "phone_msg msg-error");
+            } else {
+              $(".phone_msg").attr("class", "phone_msg msg-success");
+            }
+          }
+        });
+      }
+    }).focus(function() {
+      if($(".phone_msg").length == 0) {
+        $(this).after('<span class="phone_msg msg-default">请输入合法的手机号</span>');
+      } else {
+        $(".phone_msg").html("请输入合法的手机号");
+        $(".phone_msg").attr("class", "phone_msg msg-default");
+      }
+    });
+
+    // 修改保存按钮点击处理
+    $(".save").click(function() {
+      // 验证所有字段是否合法
+      var isValid = true;
+
+      // 检查用户名
+      if($(".ed_username").is(":visible") && $(".username_msg").hasClass("msg-error")) {
+        isValid = false;
+      }
+
+      // 检查邮箱
+      if($(".ed_email").is(":visible") && $(".email_msg").hasClass("msg-error")) {
+        isValid = false;
+      }
+
+      // 检查手机号
+      if($(".phone_msg").hasClass("msg-error")) {
+        isValid = false;
+      }
+
+      if(!isValid) {
+        alert("请正确填写所有信息！");
+        return;
+      }
+
+      // 获取表单数据
+      var username = $(".ed_username").is(":visible") ? $(".ed_username").val() : $(".rs_username").text();
+      var gender = $(".man").hasClass("selected") ? 1 : 0;
+      var phone = $("#phone").val();
+      var email = $(".ed_email").is(":visible") ? $(".ed_email").val() : $(".rs_mail").text();
+
+      // 发送AJAX请求更新用户信息
+      $.ajax({
+        url: "../user/updateUserInfo.do",
+        type: "POST",
+        data: {
+          username: username,
+          gender: gender,
+          phone: phone,
+          email: email
+        },
+        dataType: "json",
+        success: function(response) {
+          if(response.state == 1) {
+            // 更新成功，刷新页面
+            alert(response.message);
+            location.reload();
+          } else {
+            // 更新失败
+            alert(response.message);
+          }
+        },
+        error: function() {
+          alert("网络异常，请稍后重试！");
+        }
+      });
+    });
+  });
 </script>
 </html>

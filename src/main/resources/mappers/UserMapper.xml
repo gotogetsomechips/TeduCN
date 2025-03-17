@@ -66,4 +66,35 @@
                      #{createdUser}, #{createdTime}, #{modifiedUser}, #{modifiedTime}
                  )
     </insert>
+    <select id="selectUserById" resultType="cn.tedu.store.bean.TUser">
+        select
+            id,
+            username,
+            password,
+            email,
+            phone,
+            gender,
+            created_user,
+            created_time,
+            modified_user,
+            modified_time
+        from
+            t_user
+        where
+            id=#{id}
+    </select>
+
+    <update id="updateUser" parameterType="cn.tedu.store.bean.TUser">
+        UPDATE t_user
+        <set>
+            <if test="username != null">username = #{username},</if>
+            <if test="password != null">password = #{password},</if>
+            <if test="email != null">email = #{email},</if>
+            <if test="phone != null">phone = #{phone},</if>
+            <if test="gender != null">gender = #{gender},</if>
+            modified_user = #{modifiedUser},
+            modified_time = #{modifiedTime}
+        </set>
+        WHERE id = #{id}
+    </update>
 </mapper>

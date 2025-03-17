@@ -65,46 +65,40 @@
       <li><a href="showHelp.do">帮助</a><b>|</b></li>
       <!-- 登录判断逻辑 -->
       <li id="login_info">
+        <%
+          cn.tedu.store.bean.TUser loginUser = (cn.tedu.store.bean.TUser) session.getAttribute("loginUser");
+          if(loginUser != null) {
+        %>
+        <div class="user_info">
+          <a href="javascript:void(0);" id="username_show"><%= loginUser.getUsername() %></a>
+          <div class="dropdown_menu" style="display:none;">
+            <a href="showPersonage.do">修改个人信息</a>
+            <a href="javascript:void(0);" id="logout">退出登录</a>
+          </div>
+        </div>
         <script>
-          // 页面加载时判断是否已登录
-          $(function(){
-            // 从 sessionStorage 获取登录用户信息
-            var userInfo = sessionStorage.getItem("loginUser");
-            if(userInfo){
-              // 已登录，解析用户数据
-              var user = JSON.parse(userInfo);
-              // 显示用户名和下拉菜单
-              $("#login_info").html('<div class="user_info">' +
-                      '<a href="javascript:void(0);" id="username_show">' + user.username + '</a>' +
-                      '<div class="dropdown_menu" style="display:none;">' +
-                      '<a href="showPersonage.do">修改个人信息</a>' +
-                      '<a href="javascript:void(0);" id="logout">退出登录</a>' +
-                      '</div>' +
-                      '</div>');
+          // 绑定鼠标悬停事件
+          $(".user_info").hover(
+                  function() {
+                    $(this).find(".dropdown_menu").show();
+                  },
+                  function() {
+                    $(this).find(".dropdown_menu").hide();
+                  }
+          );
 
-              // 绑定鼠标悬停事件
-              $(".user_info").hover(
-                      function() {
-                        $(this).find(".dropdown_menu").show();
-                      },
-                      function() {
-                        $(this).find(".dropdown_menu").hide();
-                      }
-              );
-
-              // 绑定退出登录事件
-              $("#logout").click(function(){
-                // 清除会话存储的用户信息
-                sessionStorage.removeItem("loginUser");
-                // 跳转到首页
-                location.href = "showIndex.do";
-              });
-            } else {
-              // 未登录，显示登录链接
-              $("#login_info").html('<a href="showLogin.do">登录</a>');
-            }
+          // 绑定退出登录事件
+          $("#logout").click(function(){
+            // 发送请求清除服务器端 Session
+            $.get("../user/logout.do", function() {
+              // 跳转到首页
+              location.href = "showIndex.do";
+            });
           });
         </script>
+        <% } else { %>
+        <a href="showLogin.do">登录</a>
+        <% } %>
       </li>
     </ul>
   </div>

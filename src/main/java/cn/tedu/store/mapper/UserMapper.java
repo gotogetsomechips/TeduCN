@@ -16,4 +16,20 @@ public interface UserMapper {
      * @return 受影响的行数
      */
     Integer insertUser(TUser user);
+
+    /**
+     * 通过ID查询用户
+     * @param id 用户ID
+     * @return 用户数据
+     */
+    TUser selectUserById(Integer id);
+
+    /**
+     * 更新用户信息
+     * @param user 要更新的用户数据
+     * @return 受影响的行数
+     */
+    Integer updateUser(TUser user);
+
+
 }

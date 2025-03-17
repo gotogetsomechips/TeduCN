@@ -40,4 +40,20 @@ public interface IUserService {
      * @return 登录成功的用户数据
      */
     TUser login(String username, String password);
+
+    /**
+     * 更新用户信息
+     * @param user 要更新的用户数据
+     * @return 更新后的用户数据
+     */
+    TUser updateUserInfo(TUser user);
+
+    /**
+     * 修改用户密码
+     * @param userId 用户ID
+     * @param oldPassword 旧密码
+     * @param newPassword 新密码
+     * @return 是否修改成功
+     */
+    boolean updatePassword(Integer userId, String oldPassword, String newPassword);
 }

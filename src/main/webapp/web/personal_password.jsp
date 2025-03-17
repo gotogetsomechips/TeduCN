@@ -171,4 +171,71 @@
 <script src="../js/index.js"></script>
 <script src="../js/jquery.page.js"></script>
 <script type="text/javascript" src="../js/orders.js"></script>
+<script>
+  $(function(){
+    // 保存密码按钮点击事件
+    $(".save_password").click(function(){
+      // 获取输入的密码
+      var oldPassword = $(".new_password:eq(0) input").val();
+      var newPassword = $(".new_password:eq(1) input").val();
+      var confirmPassword = $(".confirm_password input").val();
+
+      // 验证密码不能为空
+      if(oldPassword == ""){
+        $(".new_password:eq(0) .change_hint").html("原密码不能为空");
+        return;
+      }
+      if(newPassword == ""){
+        $(".new_password:eq(1) .change_hint").html("新密码不能为空");
+        return;
+      }
+      if(confirmPassword == ""){
+        $(".confirm_password .confirm_hint").html("确认密码不能为空");
+        return;
+      }
+
+      // 验证新密码长度
+      if(newPassword.length < 6 || newPassword.length > 12){
+        $(".new_password:eq(1) .change_hint").html("密码长度应在6到12位之间");
+        return;
+      }
+
+      // 验证两次密码是否一致
+      if(newPassword != confirmPassword){
+        $(".confirm_password .confirm_hint").html("两次密码不一致");
+        return;
+      }
+
+      // 发送AJAX请求修改密码
+      $.ajax({
+        url: "../user/updatePassword.do",
+        type: "POST",
+        data: {
+          "oldPassword": oldPassword,
+          "newPassword": newPassword
+        },
+        dataType: "json",
+        success: function(result){
+          if(result.state == 1){
+            alert("密码修改成功，请重新登录！");
+            location.href = "../user/showLogin.do";
+          }else{
+            alert(result.message);
+          }
+        }
+      });
+    });
+
+    // 清除提示信息
+    $(".new_password:eq(0) input").focus(function(){
+      $(".new_password:eq(0) .change_hint").html("");
+    });
+    $(".new_password:eq(1) input").focus(function(){
+      $(".new_password:eq(1) .change_hint").html("");
+    });
+    $(".confirm_password input").focus(function(){
+      $(".confirm_password .confirm_hint").html("");
+    });
+  });
+</script>
 </html>

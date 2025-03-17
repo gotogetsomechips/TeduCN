@@ -60,4 +60,44 @@ public class UserService implements IUserService {
 
         return null; // 登录失败
     }
+
+    @Override
+    public TUser updateUserInfo(TUser user) {
+        // 设置修改时间
+        user.setModifiedTime(new java.sql.Date(System.currentTimeMillis()));
+
+        // 设置修改用户（进行更改的用户）
+        user.setModifiedUser(user.getUsername());
+
+        // 更新用户数据
+        userMapper.updateUser(user);
+
+        // 返回更新后的用户数据
+        return userMapper.selectUserById(user.getId());
+    }
+
+    @Override
+    public boolean updatePassword(Integer userId, String oldPassword, String newPassword) {
+        // 根据用户ID查询用户
+        TUser user = userMapper.selectUserById(userId);
+
+        // 验证旧密码是否正确
+        if (user != null && user.getPassword().equals(oldPassword)) {
+            // 创建新的用户对象用于更新
+            TUser updateUser = new TUser();
+            updateUser.setId(userId);
+            updateUser.setPassword(newPassword);
+
+            // 设置修改时间和修改用户
+            java.sql.Date now = new java.sql.Date(System.currentTimeMillis());
+            updateUser.setModifiedTime(now);
+            updateUser.setModifiedUser(user.getUsername());
+
+            // 更新密码
+            userMapper.updateUser(updateUser);
+            return true;
+        }
+
+        return false; // 原密码不正确
+    }
 }

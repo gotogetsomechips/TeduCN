@@ -67,7 +67,7 @@
     <dl class="count_managment">
       <dt >帐号管理<img src="../images/myOrder/myOrder1.png"></dt>
       <dd class="first_dd"><a href="../user/showPersonage.do">我的信息</a></dd>
-      <dd><a href="personal_icon.html">个人头像</a></dd>
+<%--      <dd><a href="personal_icon.html">个人头像</a></dd>--%>
       <dd><a href="../user/showPersonal_Password.do">安全管理</a></dd>
     </dl>
   </div>
